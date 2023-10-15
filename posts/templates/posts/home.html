@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>home</title>
+{% endblock  %}
+
+{% block content %}
+    {% comment %} {% for posts in home %}
+        <a href='{{ posts.get_absolute_url }}'>{{ posts.body }}</a> </br> </br>
+    {% endfor %} {% endcomment %}
+    
+{% endblock  %}
