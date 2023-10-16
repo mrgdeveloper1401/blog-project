@@ -1,10 +1,10 @@
 from django.contrib import admin
-from .models import Post
+from .models import PostModel, PostTagModel, CategoryModel
 from django_jalali.admin.filters import JDateFieldListFilter
 
 
 
-@admin.register(Post)
+@admin.register(PostModel)
 class Post(admin.ModelAdmin):
     list_display = ('user', 'updated_at', 'created_at', 'is_active')
     list_filter = ('is_active', ('created_at', JDateFieldListFilter),
@@ -14,3 +14,15 @@ class Post(admin.ModelAdmin):
     raw_id_fields = ('user', )
     prepopulated_fields = {'slug': ('body',)}
     ordering = ('-created_at', )
+    
+    
+
+@admin.register(PostTagModel)
+class PostTagAdmin(admin.ModelAdmin):
+    # list_display = ('title',)
+    pass
+
+
+@admin.register(CategoryModel)
+class CategoryAdmin(admin.ModelAdmin):
+    pass

@@ -6,11 +6,31 @@ from accounts.models import Users
 from django_jalali.db import models as jmodels
 
 
-class Post(models.Model):
+
+class CategoryModel(models.Model):
+    title_choices = (
+        ('technology', _('تکنولوژی')),
+        ('lifestyle', _('سبک زندگی')),
+    )
+    title_choose = models.CharField(_('انتخاب نوع دسته بندی'), max_length=10,
+                                    choices=title_choices)
+    
+    def __str__(self) -> str:
+        return self.title_choose
+    
+    class Meta:
+        verbose_name = 'دسته بندی'
+        verbose_name_plural = 'دسته بندی ها'
+        db_table = 'category'
+        # ordering = ('title_choose',)
+
+class PostModel(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='posts')
-    image = models.ImageField(upload_to='post/image', null=True, blank=True)
-    video = models.FileField(upload_to='post/video', null=True, blank=True)
+    category = models.ForeignKey(CategoryModel, on_delete=models.CASCADE, 
+                                 related_name='categories')
+    title = models.CharField(max_length=100)
     body = models.TextField(help_text='write any thing', max_length=300)
+    image = models.ImageField(_("عکس"), upload_to='posts/%Y/%M/%D')
     slug = models.SlugField(null=True, unique=True)
     is_active = models.BooleanField(default=True)
     created_at = jmodels.jDateTimeField(auto_now_add=True)
@@ -29,3 +49,15 @@ class Post(models.Model):
         db_table = 'post'
         ordering = ('created_at',)
     
+    
+# class PostImageModel(models.Model):
+#     user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='posts')
+#     image = models.ManyToManyField(PostModel, related_name='post_images')
+    
+class PostTagModel(models.Model):
+    title = models.ManyToManyField(PostModel, related_name='tags')
+
+
+    class Meta:
+        verbose_name = 'تگ'
+        verbose_name_plural = 'تگ ها'
