@@ -5,8 +5,9 @@
 {% endblock  %}
 
 {% block content %}
-    {% comment %} {% for posts in home %}
-        <a href='{{ posts.get_absolute_url }}'>{{ posts.body }}</a> </br> </br>
-    {% endfor %} {% endcomment %}
+    {% for posts in home %}
+    <a href='{{ posts.get_absolute_url }}'>{{ posts.body }}</a></br>
+    <p>{{ posts.created_at | date:"Y-m-w" }} {{ posts.created_at | time }}</p>
+    {% endfor %}
     
 {% endblock  %}

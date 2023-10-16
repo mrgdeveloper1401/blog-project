@@ -1,6 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser
+from django_jalali.db import models as jmodels
+from django.utils import timezone
 
 
 class Users(AbstractUser):
@@ -10,14 +12,16 @@ class Users(AbstractUser):
         ('Male', 'Male'),
         ('Female', 'Female'),
     )
+    date_joined = jmodels.jDateTimeField(_("date joined"), default=timezone.now)
+    last_login = jmodels.jDateTimeField(_("last login"), blank=True, null=True)
     gender = models.CharField(_('Gender'), max_length=6, choices=gender, default='Male')
     
     def __str__(self) -> str:
         return self.username
     
     class Meta:
-        verbose_name = 'user'
-        verbose_name_plural = 'users'
+        verbose_name = 'کاربر'
+        verbose_name_plural = 'کاربران'
         db_table = 'user'
         
 
@@ -32,6 +36,6 @@ class Notification(models.Model):
     
     
     class Meta:
-        verbose_name = 'notification'
-        verbose_name_plural = 'notifications'
+        verbose_name = 'اعلان'
+        verbose_name_plural = 'اعلانات'
         db_table = 'notifications'
