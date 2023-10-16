@@ -16,8 +16,8 @@ class Post(models.Model):
     created_at = jmodels.jDateTimeField(auto_now_add=True)
     updated_at = jmodels.jDateTimeField(_('updated post'), default=timezone.now)
     
-    # def __str__(self) -> any:
-    #     return self.user
+    def __str__(self) -> any:
+        return self.body
     
     def get_absolute_url(self):
         return reverse_lazy("posts:details_post", args=(self.pk, self.slug))

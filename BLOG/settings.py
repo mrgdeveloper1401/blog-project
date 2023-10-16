@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts.apps.AccountsConfig',
     'posts.apps.PostsConfig',
     'django_jalali',
+    'comments.apps.CommentsConfig',
     
 ]
 
