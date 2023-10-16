@@ -11,3 +11,4 @@ class CommentAdmin(admin.ModelAdmin):
     list_filter = ('is_active','created_at', 'updated_at')
     list_display_links = ('id', 'user')
     search_fields = ('body', 'updated_at')
+    prepopulated_fields = {'slug': ('body',)}

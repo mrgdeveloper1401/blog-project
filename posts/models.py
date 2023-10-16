@@ -9,8 +9,8 @@ from django_jalali.db import models as jmodels
 
 class CategoryModel(models.Model):
     title_choices = (
-        ('technology', _('تکنولوژی')),
-        ('lifestyle', _('سبک زندگی')),
+        ('تکنولوژی', _('تکنولوژی')),
+        ('سبک زندگی', _('سبک زندگی')),
     )
     title_choose = models.CharField(_('انتخاب نوع دسته بندی'), max_length=10,
                                     choices=title_choices)
@@ -28,9 +28,9 @@ class PostModel(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='posts')
     category = models.ForeignKey(CategoryModel, on_delete=models.CASCADE, 
                                  related_name='categories')
-    title = models.CharField(max_length=100)
-    body = models.TextField(help_text='write any thing', max_length=300)
-    image = models.ImageField(_("عکس"), upload_to='posts/%Y/%M/%D')
+    title = models.CharField(max_length=255)
+    body = models.TextField(help_text='write any thing')
+    image = models.ImageField(_("عکس"), upload_to='posts/%Y/%M/%D', blank=True, null=True)
     slug = models.SlugField(null=True, unique=True)
     is_active = models.BooleanField(default=True)
     created_at = jmodels.jDateTimeField(auto_now_add=True)
