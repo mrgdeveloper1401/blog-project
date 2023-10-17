@@ -13,7 +13,8 @@ class Comment(models.Model):
     is_active = models.BooleanField(default=True)
     created_at = jmodels.jDateTimeField(_('تاریخ ایجاد کامنت'), auto_now_add=True)
     updated_at = jmodels.jDateTimeField(_('تاریخ بروزرسانی کامنت'),auto_now=True)
-    reply_to = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
+    reply_to = models.ForeignKey('self', on_delete=models.CASCADE, blank=True,
+                                 null=True)
     
     
 

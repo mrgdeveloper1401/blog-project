@@ -5,9 +5,23 @@
 {% endblock  %}
 
 {% block content %}
+
+
+    <nav>
+        {% for cat in category %}
+            <li>{{ cat }}</li>
+        {% endfor %}
+    </nav> </br> </br>
+    
     {% for posts in home %}
+
+    <ul>
+        {% for category in posts.category.all %}
+            <li>{{ category.title_choose }}</li>
+        {% endfor %}
+    </ul>
     <a href='{{ posts.get_absolute_url }}'>{{ posts.body }}</a></br>
-    <p>{{ posts.created_at | date:"Y-m-w" }} {{ posts.created_at | time }}</p>
+    <p>نوشه شده {{ posts.created_at | date:"Y-m-w" }} {{ posts.created_at | time }}</p> </br>
     {% endfor %}
     
 {% endblock  %}

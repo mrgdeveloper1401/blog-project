@@ -6,14 +6,21 @@ from accounts.models import Users
 from django_jalali.db import models as jmodels
 
 
+# post managers
+class PostManagers(models.Manager):
+    def published(self):
+        return self.filter(status_choose='published')
+
 
 class CategoryModel(models.Model):
     title_choices = (
-        ('تکنولوژی', _('تکنولوژی')),
-        ('سبک زندگی', _('سبک زندگی')),
+        ('texhnology', ('تکنولوژی')),
+        ('lifestyle', ('سبک زندگی')),
     )
     title_choose = models.CharField(_('انتخاب نوع دسته بندی'), max_length=10,
                                     choices=title_choices)
+    create_category = jmodels.jDateTimeField(_('تاریخ ایجاد شده دسته بندی'),
+                                             auto_now_add=True)
     
     def __str__(self) -> str:
         return self.title_choose
@@ -24,28 +31,44 @@ class CategoryModel(models.Model):
         db_table = 'category'
         # ordering = ('title_choose',)
 
+
+class ImageModel(models.Model):
+    image = models.ImageField(_('عکس'),
+                              upload_to='images/post%Y/%M/%D')
+
 class PostModel(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='posts')
-    category = models.ForeignKey(CategoryModel, on_delete=models.CASCADE, 
+    category = models.ManyToManyField(CategoryModel, 
                                  related_name='categories')
+    image = models.ManyToManyField(ImageModel, related_name='images',
+                                   blank=True)
     title = models.CharField(max_length=255)
     body = models.TextField(help_text='write any thing')
-    image = models.ImageField(_("عکس"), upload_to='posts/%Y/%M/%D', blank=True, null=True)
     slug = models.SlugField(null=True, unique=True)
     is_active = models.BooleanField(default=True)
     created_at = jmodels.jDateTimeField(auto_now_add=True)
     updated_at = jmodels.jDateTimeField(_('updated post'), default=timezone.now)
+    
+    status = (
+        ('published', 'انتشار یافته'),
+        ('reject', 'رد شده')
+    )
+    status_choose = models.CharField(_('انتخاب وضعیت'), max_length=10,
+                                    choices=status, default='published')
+    
+    objects = PostManagers()
     
     def __str__(self) -> any:
         return self.body
     
     def get_absolute_url(self):
         return reverse_lazy("posts:details_post", args=(self.pk, self.slug))
-    
+
+
     
     class Meta:
-        verbose_name = 'پست'
-        verbose_name_plural = 'پست ها'
+        verbose_name = 'مقاله و پست'
+        verbose_name_plural = 'مقالات و پست ها'
         db_table = 'post'
         ordering = ('created_at',)
     
