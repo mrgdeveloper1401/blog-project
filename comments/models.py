@@ -1,9 +1,14 @@
 from django.db import models
+from django.db.models.query import QuerySet
 from django.utils.translation import gettext_lazy as _
 from django_jalali.db import models as jmodels
 from accounts.models import Users
 from posts.models import PostModel
 
+
+class CommnetsManager(models.Manager):
+    def get_queryset(self) -> QuerySet:
+        return super().get_queryset().filter(status=Comment.StatusComments.published)
 
 class Comment(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='comments')
