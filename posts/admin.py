@@ -6,11 +6,12 @@ from django_jalali.admin.filters import JDateFieldListFilter
 
 @admin.register(PostModel)
 class Post(admin.ModelAdmin):
-    list_display = ('user', 'category_to_str','updated_at', 'created_at', 'is_active')
+    list_display = ('user', 'category_to_str','updated_at', 'created_at', 'is_active',
+                    'status_choose', 'category')
     list_filter = ('is_active', ('created_at', JDateFieldListFilter),
                    ('updated_at', JDateFieldListFilter))
     search_fields = ('body', )
-    list_editable = ('is_active', )
+    list_editable = ('is_active', 'status_choose')
     raw_id_fields = ('user', )
     prepopulated_fields = {'slug': ('body',)}
     ordering = ('-created_at', )

@@ -25,6 +25,9 @@ class CategoryModel(models.Model):
     def __str__(self) -> str:
         return self.title_choose
     
+    def category_published(self):
+        return self.title_choose.filter(status='published')
+    
     class Meta:
         verbose_name = 'دسته بندی'
         verbose_name_plural = 'دسته بندی ها'
