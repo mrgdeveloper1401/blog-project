@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 from .models import PostModel, CategoryModel
+from django.core.paginator import Paginator
 
 
 class HomeView(View):
@@ -8,6 +9,9 @@ class HomeView(View):
     def get(self, request):
         all_post = PostModel.published.order_by('-created_at')[:10]
         category = CategoryModel.objects.all()
+        pagintor = Paginator(all_post, 1)
+        page_number = request.GET.get('page', 1)
+        all_post = pagintor.page(page_number)
         context = {
             'home': all_post,
             'category': category,
