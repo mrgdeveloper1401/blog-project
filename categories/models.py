@@ -5,17 +5,19 @@ from django.utils.translation import gettext_lazy as _
 
 class CategoryModel(models.Model):
     title_choices = (
-        ('texhnology', ('تکنولوژی')),
-        ('lifestyle', ('سبک زندگی')),
+        ('programming', ('برنامه نویسی')),
+        ('Artificial Intelligence', ('هوش مصنوعی')),
+        ('Electronics', ('لوازم الترونیکی')),
+        ('internet', ('اینترنت')),
+        ('security nad network', ('امنیت و شبکه')),
+        ('computer and hardware', ('کامپیوتر و سخت افزار')),
+        ('software and application', ('نرم افزار و اپلیکیشن'))
     )
-    title_choose = models.CharField(_('انتخاب نوع دسته بندی'), max_length=10,
+    title_choose = models.CharField(_('انتخاب نوع دسته بندی'), max_length=24,
                                     choices=title_choices,
-                                    null=True, blank=True,
-                                    default='----')
+                                    )
     create_category = jmodels.jDateTimeField(_('تاریخ ایجاد شده دسته بندی'),
                                              auto_now_add=True)
-    category = models.CharField(_("انتخاب دسته بندی"), max_length=100, null=True,
-                                blank=True)
     
     def __str__(self) -> str:
         return self.title_choose

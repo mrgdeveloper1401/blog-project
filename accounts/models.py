@@ -6,8 +6,9 @@ from django.utils import timezone
 
 
 class Users(AbstractUser):
-    email = models.EmailField(max_length=254, unique=True)
-    mobile_phone = models.CharField(_('mobile'), max_length=11, unique=True)
+    email = models.EmailField(_("ایمیل"), max_length=254, unique=True)
+    mobile_phone = models.CharField(_('شماره همراه'), max_length=11, unique=True, blank=True,
+                                    null=True)
     gender = (
         ('Male', 'Male'),
         ('Female', 'Female'),
