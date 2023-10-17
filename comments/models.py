@@ -8,14 +8,19 @@ from posts.models import PostModel
 class Comment(models.Model):
     user = models.ForeignKey(Users, on_delete=models.CASCADE, related_name='comments')
     post = models.ForeignKey(PostModel, on_delete=models.CASCADE, related_name='posts')
-    body = models.TextField(max_length=300)
+    body = models.TextField(_("متن کامنت"), max_length=300)
     slug = models.SlugField(unique=True)
-    is_active = models.BooleanField(default=True)
     created_at = jmodels.jDateTimeField(_('تاریخ ایجاد کامنت'), auto_now_add=True)
     updated_at = jmodels.jDateTimeField(_('تاریخ بروزرسانی کامنت'),auto_now=True)
     reply_to = models.ForeignKey('self', on_delete=models.CASCADE, blank=True,
                                  null=True)
-    
+    class StatusComments(models.TextChoices):
+        published = 'pb', _('انشار یافته')
+        reject = 'rj', _('رد شده')
+        
+    status = models.CharField(max_length=2,
+                              choices=StatusComments.choices,
+                              default=StatusComments.published)
     
 
     

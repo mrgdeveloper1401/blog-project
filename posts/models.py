@@ -25,21 +25,24 @@ class PostModel(models.Model):
     title = models.CharField(max_length=255)
     body = models.TextField(help_text='write any thing')
     slug = models.SlugField(null=True, unique=True)
-    is_active = models.BooleanField(default=True)
     created_at = jmodels.jDateTimeField(auto_now_add=True)
     updated_at = jmodels.jDateTimeField(_('updated post'), default=timezone.now)
     
-    status = (
-        ('published', 'انتشار یافته'),
-        ('reject', 'رد شده')
-    )
-    status_choose = models.CharField(_('انتخاب وضعیت'), max_length=10,
-                                    choices=status, default='published')
     
+    class StatusPost(models.TextChoices):
+        published = 'pb', _('انتشار یافته')
+        reject ='rj', _('رد شده')
+        
+        
+    status_choose = models.CharField(_('انتخاب وضعیت'), max_length=2,
+                                    choices=StatusPost.choices,
+                                    default=StatusPost.published)
     objects = PostManagers()
     
+    
     def __str__(self) -> any:
-        return self.body
+        return self.title
+    
     
     def get_absolute_url(self):
         return reverse_lazy("posts:details_post", args=(self.pk, self.slug))
@@ -50,7 +53,10 @@ class PostModel(models.Model):
         verbose_name = 'مقاله و پست'
         verbose_name_plural = 'مقالات و پست ها'
         db_table = 'post'
-        ordering = ('created_at',)
+        ordering = ('-created_at', )
+        indexes = (
+            models.Index(fields=['-created_at',]),
+        )
     
     
 # class PostImageModel(models.Model):
