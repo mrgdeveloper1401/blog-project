@@ -4,36 +4,13 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from accounts.models import Users
 from django_jalali.db import models as jmodels
+from categories.models import CategoryModel
 
 
 # post managers
 class PostManagers(models.Manager):
     def published(self):
         return self.filter(status_choose='published')
-
-
-class CategoryModel(models.Model):
-    title_choices = (
-        ('texhnology', ('تکنولوژی')),
-        ('lifestyle', ('سبک زندگی')),
-    )
-    title_choose = models.CharField(_('انتخاب نوع دسته بندی'), max_length=10,
-                                    choices=title_choices)
-    create_category = jmodels.jDateTimeField(_('تاریخ ایجاد شده دسته بندی'),
-                                             auto_now_add=True)
-    
-    def __str__(self) -> str:
-        return self.title_choose
-    
-    def category_published(self):
-        return self.title_choose.filter(status='published')
-    
-    class Meta:
-        verbose_name = 'دسته بندی'
-        verbose_name_plural = 'دسته بندی ها'
-        db_table = 'category'
-        # ordering = ('title_choose',)
-
 
 class ImageModel(models.Model):
     image = models.ImageField(_('عکس'),

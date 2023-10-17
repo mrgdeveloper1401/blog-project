@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'posts.apps.PostsConfig',
     'django_jalali',
     'comments.apps.CommentsConfig',
+    'categories.apps.CategoriesConfig',
     
 ]
 

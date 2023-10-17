@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import PostModel, PostTagModel, CategoryModel
+from .models import PostModel, PostTagModel
 from django_jalali.admin.filters import JDateFieldListFilter
 
 
@@ -7,7 +7,7 @@ from django_jalali.admin.filters import JDateFieldListFilter
 @admin.register(PostModel)
 class Post(admin.ModelAdmin):
     list_display = ('user', 'category_to_str','updated_at', 'created_at', 'is_active',
-                    'status_choose', 'category')
+                    'status_choose',)
     list_filter = ('is_active', ('created_at', JDateFieldListFilter),
                    ('updated_at', JDateFieldListFilter))
     search_fields = ('body', )
@@ -15,7 +15,7 @@ class Post(admin.ModelAdmin):
     raw_id_fields = ('user', )
     prepopulated_fields = {'slug': ('body',)}
     ordering = ('-created_at', )
-    filter_horizontal = ('category', 'image',)
+    filter_horizontal = ('category', )
     
     def category_to_str(self, obj):
         return [categories.title_choose for categories in obj.category.all() ]
@@ -26,9 +26,3 @@ class Post(admin.ModelAdmin):
 class PostTagAdmin(admin.ModelAdmin):
     # list_display = ('title',)
     pass
-
-
-@admin.register(CategoryModel)
-class CategoryAdmin(admin.ModelAdmin):
-    search_fields = ('title_choose','create_category')
-    list_display = ('title_choose', 'create_category')
