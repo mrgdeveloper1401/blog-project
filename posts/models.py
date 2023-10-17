@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.db import models
@@ -9,8 +10,9 @@ from categories.models import CategoryModel
 
 # post managers
 class PostManagers(models.Manager):
-    def published(self):
-        return self.filter(status_choose='published')
+    def get_queryset(self) -> QuerySet:
+        return super().get_queryset().filter(status_choose=PostModel.StatusPost.published)
+    
 
 class ImageModel(models.Model):
     image = models.ImageField(_('عکس'),
@@ -37,7 +39,8 @@ class PostModel(models.Model):
     status_choose = models.CharField(_('انتخاب وضعیت'), max_length=2,
                                     choices=StatusPost.choices,
                                     default=StatusPost.published)
-    objects = PostManagers()
+    objects = models.Manager()
+    published = PostManagers()
     
     
     def __str__(self) -> any:
