@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from .models import PostModel, CategoryModel
 from django.core.paginator import Paginator
-from django.views.generic import ListView
+# from django.views.generic import ListView
 
 
 class HomeView(View):
@@ -16,7 +16,7 @@ class HomeView(View):
         all_post = paginator.get_page(page_number)
         
         context = {
-            'home': all_post,
+            'post': all_post,
             'category': category,
         }
         return render(request, self.templated_name, context)

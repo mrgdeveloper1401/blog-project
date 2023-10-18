@@ -25,6 +25,9 @@ class PostModel(models.Model):
     image = models.ManyToManyField(ImageModel, related_name='images',
                                    blank=True)
     title = models.CharField(max_length=255)
+    sub_title = models.CharField(_('اختصار عنوان'),
+        max_length=100    
+    )
     body = models.TextField(help_text='write any thing')
     slug = models.SlugField(null=True, unique=True)
     created_at = jmodels.jDateTimeField(auto_now_add=True)

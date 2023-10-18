@@ -27,6 +27,8 @@ class CategoryModel(models.Model):
     # )
     category = models.CharField(_('انتخاب دسته بندی'),
         max_length=100,
+        null=True,
+        blank=True
     )
     create_category = jmodels.jDateTimeField(_('تاریخ ایجاد شده دسته بندی'),
                                              auto_now_add=True)
@@ -36,7 +38,9 @@ class CategoryModel(models.Model):
         reject = 'rj', _('رد شده')
     status_category = models.CharField(_('وضعیت انشتار'),
         choices=StatusSubCategory.choices,
-        max_length=2
+        max_length=2,
+        null=True,
+        blank=True
     )
     
     def __str__(self) -> str:
