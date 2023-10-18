@@ -23,5 +23,6 @@
     <a href='{{ posts.get_absolute_url }}'>{{ posts.body }}</a></br>
     <p>نوشه شده {{ posts.created_at | date:"Y-m-w" }} {{ posts.created_at | time }}</p> </br>
     {% endfor %}
-    
+
+    {% include "include/paginators.html" with home=page %}
 {% endblock  %}

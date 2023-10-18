@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views import View
 from .models import PostModel, CategoryModel
 from django.core.paginator import Paginator
+from django.views.generic import ListView
 
 
 class HomeView(View):
@@ -9,9 +10,11 @@ class HomeView(View):
     def get(self, request):
         all_post = PostModel.published.order_by('-created_at')[:10]
         category = CategoryModel.objects.all()
-        pagintor = Paginator(all_post, 1)
-        page_number = request.GET.get('page', 1)
-        all_post = pagintor.page(page_number)
+        
+        paginator = Paginator(all_post, 1)
+        page_number = request.GET.get('page')
+        all_post = paginator.get_page(page_number)
+        
         context = {
             'home': all_post,
             'category': category,
@@ -25,3 +28,4 @@ class DetailsPostHomeView(View):
         form = get_object_or_404(PostModel.published, pk=kwargs['post_id'], slug=kwargs['post_slug'])
         return render(request, self.template_name, {'form': form})
     
+
