@@ -31,6 +31,14 @@ class CategoryModel(models.Model):
     create_category = jmodels.jDateTimeField(_('تاریخ ایجاد شده دسته بندی'),
                                              auto_now_add=True)
     
+    class StatusSubCategory(models.TextChoices):
+        published = 'pb', _('انتشار یافته')
+        reject = 'rj', _('رد شده')
+    status_category = models.CharField(_('وضعیت انشتار'),
+        choices=StatusSubCategory.choices,
+        max_length=2
+    )
+    
     def __str__(self) -> str:
         return self.title_choose
     
