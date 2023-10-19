@@ -4,7 +4,8 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
   <div class="container px-4 px-lg-5">
-    <a class="navbar-brand" href="index.html">New Blog</a>
+    <a class="navbar-brand" href="#"> نیو بلاگ</a>
+    <a class='navbar-brand'>ورود یا عضویت</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -18,11 +19,11 @@
       <i class="fas fa-bars"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ms-auto py-4 py-lg-0">
+      <ul class="navbar-nav ms-auto py-4 py-lg-0 m-auto">
         {% for cat in category %}
         <li class="nav-item">
           <a class="nav-link px-lg-3 py-3 py-lg-4" href="index.html"
-            >{{ cat }}</a
+            >{{ cat.title_choose }}</a
           >
         </li>
         {% endfor %}
@@ -39,8 +40,9 @@
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">
         <div class="site-heading">
-          <h1></h1>
-          <span class="subheading">همه چیز این جا هست</span>
+          {% comment %} <h1>
+              <span class="subheading">درود عزیزم</span>
+          </h1> {% endcomment %}
         </div>
       </div>
     </div>
@@ -73,7 +75,7 @@
             <span>
                 ایجاد شده در{{ posts.created_at | date }}
             </br>
-                اخرین بروزرسانی {{ posts.updated_at | date }}
+                اخرین بروزرسانی در {{ posts.updated_at | date }}
             </span>
         </div>
         <!-- Divider-->

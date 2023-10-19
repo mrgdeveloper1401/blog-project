@@ -3,6 +3,29 @@ from django_jalali.db import models as jmodels
 from django.utils.translation import gettext_lazy as _
 
 
+
+class SubCategoryModel(models.Model):
+    category = models.CharField(_('دسته بندی'),
+        max_length=100,)
+    created_sub_category = jmodels.jDateTimeField(_('تاریخ ایجاد زیر منو'),
+                                                  auto_now_add=True
+    )
+
+    class SubCategoryChoose(models.TextChoices):
+        published = 'pb', _('انتشار یافته'),
+        reject = 'rj', _('رد شده')
+    choose_sub_category = models.CharField(_("وضعیت انتشار زیر منو"),
+                                           max_length=2,
+                                           choices=SubCategoryChoose.choices)
+
+    def __str__(self):
+        return  self.category
+
+    class Meta:
+        verbose_name = 'زیر منو'
+        verbose_name_plural = 'زیر منوها'
+
+
 class CategoryModel(models.Model):
     class TitleChoose(models.TextChoices):
         programming = ('برنامه نویسی'),
@@ -25,10 +48,9 @@ class CategoryModel(models.Model):
     #     verbose_name=_('انتخاب زیر مجموعه دسته بندی'),
     #     related_name='children'
     # )
-    category = models.CharField(_('انتخاب دسته بندی'),
-        max_length=100,
-        null=True,
-        blank=True
+    category = models.ManyToManyField(SubCategoryModel,
+        related_name='sub_categorys',
+        blank=True,
     )
     create_category = jmodels.jDateTimeField(_('تاریخ ایجاد شده دسته بندی'),
                                              auto_now_add=True)
