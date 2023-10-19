@@ -2,6 +2,10 @@
 
 {% load static %}
 
+{% block load_refrences %}
+    <link rel="stylesheet" href="{% static '/css/home.css' %}">
+{% endblock  %}
+
 {% block title %}
   <title>home</title>
 {% endblock  %}
@@ -10,8 +14,8 @@
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
   <div class="container px-4 px-lg-5">
-    <a class="navbar-brand" href="#"> نیو بلاگ</a>
-    <a class='navbar-brand'>ورود یا عضویت</a>
+    <!-- <a class="navbar-brand" href="#"> نیو بلاگ</a> -->
+    <a href='#' class='navbar-brand'>ورود یا عضویت</a>
     <button
       class="navbar-toggler"
       type="button"
@@ -40,7 +44,7 @@
 <!-- Page Header-->
 <header
   class="masthead"
-  style="background-image: url('assets/img/home-bg.jpg')"
+  style="background-image: url({% static "images/img/home-bg.jpg" %})"
 >
   <div class="container position-relative px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -97,6 +101,30 @@
 </div>
 <!-- Footer-->
 <footer class="border-top">
+  <h3 class='text-center mb-4'>send feedback</h3>
+  
+  {% comment %} <section class="section-feedback">
+    <div class="feedback">
+      <form action="">
+        {% csrf_token %}
+        <input type="text">
+        <input type="text">
+        <input type="email" name="" id="">
+        <textarea name="" id="" cols="30" rows="10"></textarea>
+        <input type="submit" value="send feedback">
+      </form>
+      <div class="image-feedback">
+        <img src="{% static 'images/feedback-removebg.png' %}" alt="">
+      </div>
+    </div>
+  </section> {% endcomment %}
+
+  <form method='post' action=''>
+    {{ form }}
+    {% csrf_token %}
+    <input type="submit" value="send feedback">
+  </form>
+
   <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
       <div class="col-md-10 col-lg-8 col-xl-7">

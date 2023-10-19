@@ -1,0 +1,33 @@
+.feedback {
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    background-color: #ffff;
+    border-radius: 3rem;
+    
+}
+
+.image-feedback img {
+    width: 30rem;
+    height: 30rem;
+}
+
+.section-feedback {
+    /* max-width: 1440px;
+    margin: 0 auto; */
+    background-color: #e5ecfb;
+}
+
+.feedback form input{
+    display: block;
+    background-color: #e5ecfb;
+    padding: .5rem 1rem;
+    border-radius: 2rem;
+
+}
+
+.feedback form textarea {
+    display: block;
+    background-color: #e5ecfb;
+    padding: .5rem 1rem;
+}

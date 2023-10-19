@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_jalali',
     'comments.apps.CommentsConfig',
     'categories.apps.CategoriesConfig',
+    'tickets.apps.TicketsConfig',
     
 ]
 

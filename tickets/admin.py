@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import TicketMoel
 
-# Register your models here.
+
+@admin.register(TicketMoel)
+class TicketAdmin(admin.ModelAdmin):
+    pass
